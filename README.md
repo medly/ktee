@@ -5,7 +5,7 @@ KTee is Tee for Kotlin pipelines.
 > If you have ever used unix command line `tee`, you know what we mean.
 
 
-## why?
+## Why?
 
 Often times we need to break a perfect computation pipeline just to be able to log the intermediate values. For example, lets take a look at this code:
 
@@ -22,7 +22,7 @@ KTee simplifies printing intermediate values dramatically.
 
 ## How?
 
-Just `tee()` it. Seriously. Try this:
+Just `.tee()` it. Seriously! Try this:
 
 ```kotlin
 (1..10)
@@ -41,7 +41,7 @@ Which produces following output on the console:
 
 ## Can I Customize the output?
 
-We can even customize the way `tee` prints using markers and lambda blocks to return custom log messages.
+We can customize the way `tee` prints using markers and lambda blocks to return custom log messages.
 
 ```kotlin
 (1..10)
