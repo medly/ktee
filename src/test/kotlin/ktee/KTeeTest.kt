@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
 
 class KTeeTest {
 
-    val logger: Logger = LoggerFactory.getLogger(javaClass)
+    private val logger: Logger = LoggerFactory.getLogger(javaClass)
 
     @Test
     fun `should return the original value in chains`() {
@@ -33,35 +33,35 @@ class KTeeTest {
 
     @Test
     fun `should log with info level`() {
-        listOf(
+        val outputs = listOf(
                 trapErr { "myval".teeToInfo(logger, "hello {}") },
                 trapErr { "myval".teeToInfo(logger) { "hello $it" } },
                 trapErr { "myval".teeToInfo(logger) { "hello {}" } }
         )
-                .also { it.all { output -> output.contains("INFO") } }
-                .also { it.all { output -> output.endsWith("hello myval\n") } }
+        outputs.forEach { assertTrue { it.contains("INFO") } }
+        outputs.forEach { assertTrue { it.endsWith("hello myval\n") } }
     }
 
     @Test
     fun `should log with trace() level`() {
-        listOf(
+        val outputs = listOf(
                 trapErr { "myval".teeToTrace(logger, "hello {}") },
                 trapErr { "myval".teeToTrace(logger) { "hello $it" } },
                 trapErr { "myval".teeToTrace(logger) { "hello {}" } }
         )
-                .also { it.all { output -> output.contains("TRACE") } }
-                .also { it.all { output -> output.endsWith("hello myval\n") } }
+        outputs.forEach { assertTrue { it.contains("TRACE") } }
+        outputs.forEach { assertTrue { it.endsWith("hello myval\n") } }
     }
 
     @Test
     fun `should log with debug level`() {
-        listOf(
+        val outputs = listOf(
                 trapErr { "myval".teeToDebug(logger, "hello {}") },
                 trapErr { "myval".teeToDebug(logger) { "hello $it" } },
                 trapErr { "myval".teeToDebug(logger) { "hello {}" } }
         )
-                .also { it.all { output -> output.contains("DEBUG") } }
-                .also { it.all { output -> output.endsWith("hello myval\n") } }
+        outputs.forEach { assertTrue { it.contains("DEBUG") } }
+        outputs.forEach { assertTrue { it.endsWith("hello myval\n") } }
     }
 
 }
