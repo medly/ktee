@@ -1,8 +1,12 @@
 # KTee
 
-KTee is Tee for Kotlin pipelines. 
+![Build](https://github.com/medly/ktee/workflows/Build/badge.svg)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=medly_ktee&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=medly_ktee)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=medly_ktee&metric=security_rating)](https://sonarcloud.io/dashboard?id=medly_ktee)
+[![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
 
-> If you have ever used unix command line `tee`, you know what we mean.
+
+KTee is Tee for Kotlin code pipelines. If you love unix command line `tee`, you know what we mean.
 
 
 ## Why?
@@ -81,7 +85,9 @@ Produces:
 
 ## How do I add it to my project?
 
-Just add [jitpack](https://jitpack.io/#com.medly/ktee/v1.0.0) as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
+[![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
+
+Just add [jitpack](https://jitpack.io/#com.medly/ktee) as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
 
 ```
 repositories {		
