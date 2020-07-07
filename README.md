@@ -6,6 +6,8 @@
 [![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
 
 
+![KTee](https://repository-images.githubusercontent.com/234463826/e1de5980-c09f-11ea-902f-7ebfca88e75a)
+
 KTee is Tee for Kotlin code pipelines. If you love unix command line `tee`, you know what we mean.
 
 
