@@ -5,10 +5,11 @@
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=medly_ktee&metric=security_rating)](https://sonarcloud.io/dashboard?id=medly_ktee)
 [![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
 
+KTee is Tee for Kotlin code pipelines. If you love the unix command line `tee`, you know what we mean.
 
 ![KTee](https://repository-images.githubusercontent.com/234463826/e1de5980-c09f-11ea-902f-7ebfca88e75a)
 
-KTee is Tee for Kotlin code pipelines. If you love unix command line `tee`, you know what we mean.
+
 
 
 ## Why?
