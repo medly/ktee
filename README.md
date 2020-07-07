@@ -78,3 +78,17 @@ Produces:
 ```
 
 > This output was produced using `slf4j-simple` binding. Your output pattern may look different depending on logger's configuration
+
+## How do I add it to my project?
+
+Just add jitpack as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
+
+```
+repositories {		
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.medly:ktee:1.0.0'
+}
+```        
