@@ -81,11 +81,11 @@ Produces:
 
 ## How do I add it to my project?
 
-Just add jitpack as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
+Just add [jitpack](https://jitpack.io/#com.medly/ktee/v1.0.0) as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
 
 ```
 repositories {		
-	maven { url 'https://jitpack.io' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
