@@ -1,7 +1,9 @@
 package ktee
 
+import ktee.KTee.Companion.debug
 import org.slf4j.Logger
 
+class KTee { companion object { var debug = true } }
 
 /**
  * Prints the value to the stdout and returns the same value. Useful when chaining
@@ -13,7 +15,7 @@ import org.slf4j.Logger
  *
  */
 fun <T> T.tee(marker: String = ""): T {
-    println(marker + this)
+    if (debug) println(marker + this)
     return this
 }
 
@@ -23,7 +25,7 @@ fun <T> T.tee(marker: String = ""): T {
  *
  */
 inline fun <T> T.tee(fn: (T) -> String): T {
-    println(fn(this))
+    if (debug) println(fn(this))
     return this
 }
 
@@ -31,7 +33,7 @@ inline fun <T> T.tee(fn: (T) -> String): T {
  * logs the value to the given logger at info level. Message can be customized using message parameter
  */
 fun <T> T.teeToInfo(logger: Logger, message: String = "{}"): T {
-    logger.info(message, this)
+    if (debug) logger.info(message, this)
     return this
 }
 
@@ -40,7 +42,7 @@ fun <T> T.teeToInfo(logger: Logger, message: String = "{}"): T {
  *
  */
 inline fun <T> T.teeToInfo(logger: Logger, fn: (T) -> String): T {
-    logger.info(fn(this), this)
+    if (debug) logger.info(fn(this), this)
     return this
 }
 
@@ -48,7 +50,7 @@ inline fun <T> T.teeToInfo(logger: Logger, fn: (T) -> String): T {
  * logs the value to the given logger at info level. Message can be customized using message parameter
  */
 fun <T> T.teeToDebug(logger: Logger, message: String = "{}"): T {
-    logger.debug(message, this)
+    if (debug) logger.debug(message, this)
     return this
 }
 
@@ -57,7 +59,7 @@ fun <T> T.teeToDebug(logger: Logger, message: String = "{}"): T {
  *
  */
 inline fun <T> T.teeToDebug(logger: Logger, fn: (T) -> String): T {
-    logger.debug(fn(this), this)
+    if (debug) logger.debug(fn(this), this)
     return this
 }
 
@@ -65,7 +67,7 @@ inline fun <T> T.teeToDebug(logger: Logger, fn: (T) -> String): T {
  * logs the value to the given logger at trace level. Message can be customized using message parameter
  */
 fun <T> T.teeToTrace(logger: Logger, message: String = "{}"): T {
-    logger.trace(message, this)
+    if (debug) logger.trace(message, this)
     return this
 }
 
@@ -74,7 +76,7 @@ fun <T> T.teeToTrace(logger: Logger, message: String = "{}"): T {
  *
  */
 inline fun <T> T.teeToTrace(logger: Logger, fn: (T) -> String): T {
-    logger.trace(fn(this), this)
+    if (debug) logger.trace(fn(this), this)
     return this
 }
 
