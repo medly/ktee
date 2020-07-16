@@ -3,7 +3,23 @@ package ktee
 import ktee.KTee.Companion.debug
 import org.slf4j.Logger
 
-class KTee { companion object { var debug = true } }
+class KTee {
+    companion object {
+        var debugChanged = false
+            private set
+
+        /**
+         * If debug is set to false, all tee
+         * functions won't output anything.
+         *
+         * Variable can be set only once!
+         */
+        var debug = true
+            @Synchronized set(value) {
+                if(!debugChanged) { debugChanged = true; field = value }
+                else throw IllegalStateException("Variable debug has already been set once.")
+            }
+    } }
 
 /**
  * Prints the value to the stdout and returns the same value. Useful when chaining
