@@ -78,7 +78,7 @@ class KTeeTest {
     }
 
     @Test
-    fun `should evaluate lambda and not write to stdout`() {
+    fun `should not evaluate lambda or write to stdout`() {
         if (!KTee.debugChanged) KTee.debug = false
         assertEquals("", trapOut { "myval".tee { v -> "value is $v" } })
     }
