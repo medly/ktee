@@ -51,6 +51,20 @@ publishing {
             pom {
                 name = "ktee"
                 description = "KTee is Tee for Kotlin code pipelines. If you love the unix command line tee, you know what we mean."
+                url.set("https://github.com/medly/ktee")
+                licenses {
+                    license {
+                        name = "MIT"
+                        url = "https://opensource.org/licenses/MIT"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "kdabir"
+                        name = "Kunal Dabir"
+                        email = "kd@medly.com"
+                    }
+                }
                 scm {
                     connection = "scm:git:git@github.com:medly/ktee.git"
                     developerConnection = "scm:git:ssh://github.com/medly/ktee.git"
