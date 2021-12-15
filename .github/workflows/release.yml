@@ -1,0 +1,32 @@
+name: Build
+
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 11
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Publish
+        env:
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_SIGNING_PASSPHRASE: ${{ secrets.OSSRH_SIGNING_PASSPHRASE }}
+          OSSRH_SIGNING_SECRET_KEY: ${{ secrets.OSSRH_SIGNING_SECRET_KEY }}
+        run: ./gradlew publish

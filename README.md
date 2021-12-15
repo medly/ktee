@@ -88,13 +88,11 @@ Produces:
 
 ## How do I add it to my project?
 
-[![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
-
-Just add [jitpack](https://jitpack.io/#com.medly/ktee) as the last repo in your repositories section of `build.gradle` and add `com.medly:ktee:1.0.0` as a dependency:
+`ktee` is available in [Maven Central](https://repo.maven.apache.org/maven2/com/medly/ktee/1.0.0/) 🎉
 
 ```groovy
 repositories {		
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
 }
 
 dependencies {
