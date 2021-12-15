@@ -17,15 +17,25 @@ tasks {
     }
 }
 
+sourceSets {
+    noop {
+        java.srcDir 'src/noop/kotlin'
+    }
+}
+
 dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
-    implementation 'org.slf4j:slf4j-api:1.7.28'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.28'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
+
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+
+    noopImplementation 'org.slf4j:slf4j-nop:1.7.32'
+    noopImplementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
 
 task dokkaJar(type: Jar) {
@@ -41,8 +51,28 @@ task sourcesJar(type: Jar) {
     from(sourceSets.getByName("main").allSource)
 }
 
+task noopSources(type: Jar) {
+    archiveClassifier.set("sources")
+    from(sourceSets.noop.allSource)
+}
+
+task noopBinary(type: Jar) {
+    archiveClassifier.set("")
+    from(sourceSets.noop.output)
+}
+
 publishing {
     publications {
+        noop(MavenPublication) {
+            artifact noopSources
+            artifact noopBinary
+
+            pom {
+                name = "ktee-noop"
+                artifactId = "ktee-noop"
+            }
+        }
+
         mavenJava(MavenPublication) {
             from components.java
             artifact sourcesJar
@@ -50,7 +80,8 @@ publishing {
 
             pom {
                 name = "ktee"
-                description = "KTee is Tee for Kotlin code pipelines. If you love the unix command line tee, you know what we mean."
+                description = "KTee is Tee for Kotlin code pipelines. " +
+                        "If you love the unix command line tee, you know what we mean."
                 url.set("https://github.com/medly/ktee")
                 licenses {
                     license {
@@ -103,4 +134,5 @@ signing {
     def signingPassword = System.getenv("OSSRH_SIGNING_PASSPHRASE")
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign publishing.publications.mavenJava
+    sign publishing.publications.noop
 }
