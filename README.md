@@ -91,7 +91,7 @@ Produces:
 `ktee` is available in [Maven Central](https://repo.maven.apache.org/maven2/com/medly/ktee/1.0.0/) 🎉
 
 ```groovy
-repositories {		
+repositories {
     mavenCentral()
 }
 
