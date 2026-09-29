@@ -1,15 +1,36 @@
-# KTee
 
-![Build](https://github.com/medly/ktee/workflows/Build/badge.svg)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=medly_ktee&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=medly_ktee)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=medly_ktee&metric=security_rating)](https://sonarcloud.io/dashboard?id=medly_ktee)
-[![](https://jitpack.io/v/com.medly/ktee.svg)](https://jitpack.io/#com.medly/ktee)
+&nbsp;
+
+## Quick Disclaimer & Guide
+
+To add KTee in your project implement the two artifacts as follows.
+
+```groovy
+repositories {		
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    debugImplementation 'com.github.rtsketo.ktee:yetee:1.0.5'
+    releaseImplementation 'com.github.rtsketo.ktee:notee:1.0.5'
+}
+```
+This repo is a modified version of [Medly's Ktee](https://github.com/medly/ktee) which adds a noop implementation, the `notee` artifact.
+
+
+&nbsp;
+
+&nbsp;
+
+
+# KTee
 
 KTee is Tee for Kotlin code pipelines. If you love the unix command line `tee`, you know what we mean.
 
 ![KTee](https://repository-images.githubusercontent.com/234463826/e1de5980-c09f-11ea-902f-7ebfca88e75a)
 
 
+&nbsp;
 
 
 ## Why?
@@ -26,6 +47,8 @@ Often times we need to break a perfect computation pipeline just to be able to l
 If we want to print the result of `filter` or `map` we need to either capture the result into an intermediate `val` or add a `.let { }` with logging statements.
 
 KTee simplifies printing intermediate values dramatically.
+
+&nbsp;
 
 ## How?
 
@@ -46,6 +69,8 @@ Which produces following output on the console:
 60
 ```
 
+&nbsp;
+
 ## Can I Customize the output?
 
 We can customize the way `tee` prints using markers and lambda blocks to return custom log messages.
@@ -64,6 +89,17 @@ even numbers: [2, 4, 6, 8, 10]
 doubles >>>>> [4, 8, 12, 16, 20]
 the result is 60
 ```
+
+Set `KTee.prefix` to prepend a global prefix to `tee` and `teeToInfo`/`teeToDebug`/`teeToTrace` messages. It defaults to `""`, leaving existing output unchanged.
+
+```kotlin
+import ktee.KTee
+
+KTee.prefix = "[app] "
+"request-42".tee("Processed: ") // [app] Processed: request-42
+```
+
+&nbsp;
 
 ## Can I tee to a `logger`?
 
@@ -85,17 +121,3 @@ Produces:
 ```
 
 > This output was produced using `slf4j-simple` binding. Your output pattern may look different depending on logger's configuration
-
-## How do I add it to my project?
-
-`ktee` is available in [Maven Central](https://repo.maven.apache.org/maven2/com/medly/ktee/1.0.0/) 🎉
-
-```groovy
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'com.medly:ktee:1.0.0'
-}
-```        

@@ -1,9 +1,8 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
     id 'maven-publish'
-    id 'signing'
     id "pl.allegro.tech.build.axion-release" version "1.12.1"
-    id "org.jetbrains.dokka" version "1.6.21"
+    id "org.jetbrains.dokka" version "1.7.20"
 }
 
 repositories {
@@ -14,19 +13,35 @@ tasks.dokkaHtml.configure {
     outputDirectory.set(file("$buildDir/javadoc"))
 }
 
+sourceSets {
+    noop {
+        java.srcDir 'src/noop/kotlin'
+    }
+}
+
 dependencies {
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
-    implementation 'org.slf4j:slf4j-api:1.7.36'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.36'
-
+    implementation 'org.slf4j:slf4j-api:2.0.3'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.3'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
+
+    noopImplementation 'org.slf4j:slf4j-nop:2.0.3'
+    noopImplementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 task dokkaJar(type: Jar) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
+    description = "Assembles KDocs with Dokka"
     archiveClassifier.set("javadoc")
     from(tasks.dokkaHtml)
     dependsOn(tasks.dokkaHtml)
@@ -37,8 +52,28 @@ task sourcesJar(type: Jar) {
     from(sourceSets.getByName("main").allSource)
 }
 
+task noopSources(type: Jar) {
+    archiveClassifier.set("sources")
+    from(sourceSets.noop.allSource)
+}
+
+task noopBinary(type: Jar) {
+    archiveClassifier.set("")
+    from(sourceSets.noop.output)
+}
+
 publishing {
     publications {
+        noop(MavenPublication) {
+            artifact noopSources
+            artifact noopBinary
+
+            pom {
+                name = "ktee-noop"
+                artifactId = "notee"
+            }
+        }
+
         mavenJava(MavenPublication) {
             from components.java
             artifact sourcesJar
@@ -46,7 +81,10 @@ publishing {
 
             pom {
                 name = "ktee"
-                description = "KTee is Tee for Kotlin code pipelines. If you love the unix command line tee, you know what we mean."
+                artifactId = "yetee"
+
+                description = "KTee is Tee for Kotlin code pipelines. " +
+                        "If you love the unix command line tee, you know what we mean."
                 url.set("https://github.com/medly/ktee")
                 licenses {
                     license {
@@ -54,6 +92,7 @@ publishing {
                         url = "https://opensource.org/licenses/MIT"
                     }
                 }
+
                 developers {
                     developer {
                         id = "kdabir"
@@ -61,23 +100,13 @@ publishing {
                         email = "kd@medly.com"
                     }
                 }
+
                 scm {
                     connection = "scm:git:git@github.com:medly/ktee.git"
                     developerConnection = "scm:git:ssh://github.com/medly/ktee.git"
                     url = "https://github.com/medly/ktee"
                 }
             }
-        }
-    }
-
-    repositories {
-        maven {
-            credentials {
-                username System.getenv("OSSRH_USERNAME")
-                password System.getenv("OSSRH_PASSWORD")
-            }
-
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
         }
     }
 }
@@ -93,10 +122,3 @@ scmVersion {
 
 group = "com.medly"
 project.version = scmVersion.version
-
-signing {
-    def signingKey = System.getenv("OSSRH_SIGNING_SECRET_KEY")
-    def signingPassword = System.getenv("OSSRH_SIGNING_PASSPHRASE")
-    useInMemoryPgpKeys(signingKey, signingPassword)
-    sign publishing.publications.mavenJava
-}
